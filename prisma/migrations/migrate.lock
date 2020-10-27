@@ -1,0 +1,5 @@
+# Prisma Migrate lockfile v1
+
+20201023134741-init
+20201023202656-add-user-model
+20201027133644-add-vote-model

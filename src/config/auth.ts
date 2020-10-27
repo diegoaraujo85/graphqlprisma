@@ -1,0 +1,1 @@
+export const APP_SECRET = 'd5c25a0b6260b0819a90b70b97e3ed44';

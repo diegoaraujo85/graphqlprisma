@@ -1,0 +1,18 @@
+// Fonte de dados : informa ao Prisma que você usará SQLite para sua conexão de banco de dados.
+datasource db {
+  provider = "sqlite"
+  url = "***"
+}
+
+// Gerador : indica que você deseja gerar o Cliente Prisma.
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Modelo de dados : aqui, escrevemos nosso Link como um modelo.
+model Link {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  description String
+  url         String
+}

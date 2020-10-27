@@ -1,0 +1,85 @@
+# ! => exclamação siginifica que o campo é obrigatório e nunca pode ser null.
+
+# typeDefs - Definições de tipos
+
+# Query => consultas
+type Query {
+  # Quando fizer uma Query pedindo info, retornará uma String
+  info: String!  
+  
+  # Quando fizer uma Query pedindo feed, retornará um array de Link
+  # filter => para especificar uma palavra a filtrar / skip=> indice inicial (padrão 0) / take=> x elementos após o inicial
+  feed(filter: String, skip: Int, take: Int, orderBy: LinkOrderByInput): Feed! 
+
+# retorna um link especificado pelo id
+  link(id: ID!): Link!
+}
+
+# Mutation => adições, deleções e alterações
+type Mutation{
+  # cria um novo link
+  postLink(url: String!, description: String!): Link!
+
+  # atualiza um link
+  updateLink(id: ID!, url: String, description: String): Link
+
+  # deleta um link
+  deleteLink(id: ID!): Link
+
+  signup(email:String!, password:String!, name:String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+
+  vote(linkId: ID!): Vote
+}
+
+# Subscription => Assinatura (ouvindo/esperando novas alterações)
+type Subscription{
+  newLink: Link
+  newVote: Vote
+}
+
+
+# Definições de tipo 
+# root fields => exemplo: (id, description, url)
+type AuthPayload{
+  token:String
+  user: User
+}
+
+type Link {
+  id: ID!
+  description: String!
+  url: String!
+  postedBy: User
+  votes: [Vote!]!
+  numberOfVotes: Int!
+}
+
+type User{
+  id: ID
+  name: String
+  email:String
+  links: [Link!]!
+}
+
+type Vote{
+  id: ID!
+  link: Link!
+  user: User!
+}
+
+type Feed{
+  links: [Link!]!
+  count: Int!
+}
+
+input LinkOrderByInput{
+  description: Sort
+  url: Sort
+  createdAt: Sort
+}
+
+enum Sort{
+  asc
+  desc
+}
